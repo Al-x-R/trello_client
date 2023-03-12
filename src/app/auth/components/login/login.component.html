@@ -1,0 +1,27 @@
+<div class="auth-page">
+  <a routerLink="/">
+    <img src="/assets/trello-logo.svg" class="trello-main-logo" />
+  </a>
+  <div class="form-container">
+    <div class="auth-header">Sign in to Trello</div>
+    <div class="errors" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input
+        formControlName="email"
+        type="email"
+        placeholder="Email"
+        class="auth-input"
+      />
+      <input
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+        class="auth-input"
+      />
+      <button type="submit" class="auth-submit-button">Sign in</button>
+    </form>
+    <div class="bottom-form-links">
+      <a routerLink="/register" class="register-link">Register</a>
+    </div>
+  </div>
+</div>
