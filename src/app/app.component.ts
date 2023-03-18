@@ -9,6 +9,7 @@ import { AuthService } from './auth/services/auth.service';
 export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {
   }
+
   ngOnInit(): void {
     this.authService.getCurrentUser().subscribe({
       next: (currentUser) => {
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
         console.log('err', err);
         this.authService.setCurrentUser(null);
       },
-  })
+    });
   }
 
   title = 'trello';
