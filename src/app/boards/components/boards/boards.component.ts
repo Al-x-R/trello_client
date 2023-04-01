@@ -15,4 +15,10 @@ export class BoardsComponent implements OnInit {
       this.boards = boards;
     });
   }
+
+  createBoard(title: string): void {
+    this.boardsService.createBoard(title).subscribe((createdBoard) => {
+      this.boards = [...this.boards, createdBoard];
+    });
+  }
 }
