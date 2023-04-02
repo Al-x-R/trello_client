@@ -9,5 +9,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class TopbarComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-
+  logout(): void {
+    this.authService.logout();
+    this.router.navigateByUrl('/');
+  }
 }

@@ -42,4 +42,9 @@ export class AuthService {
   setToken(currentUser: CurrentUserInterface): void {
     localStorage.setItem('token', currentUser.token);
   }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.currentUser$.next(null);
+  }
 }
