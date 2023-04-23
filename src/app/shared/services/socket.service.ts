@@ -29,5 +29,4 @@ export class SocketService {
     }
     this.socket.emit(eventName, message);
   }
-
 }

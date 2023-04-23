@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardsService } from '../../../shared/services/boards.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { BoardService } from '../../services/board.service';
 import { filter, Observable } from 'rxjs';
 import { BoardInterface } from '../../../shared/types/board.interface';
@@ -18,6 +18,7 @@ export class BoardComponent implements OnInit {
   constructor(
     private boardsService: BoardsService,
     private route: ActivatedRoute,
+    private router: Router,
     private boardService: BoardService,
     private socketService: SocketService
   ) {
@@ -32,8 +33,17 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.socketService.emit(SocketEventsEnum.boardsJoin, {boardId: this.boardId})
+    this.socketService.emit(SocketEventsEnum.boardsJoin, { boardId: this.boardId });
     this.fetchData();
+    this.initializeListeners();
+  }
+
+  initializeListeners(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.boardService.leaveBoard(this.boardId);
+      }
+    });
   }
 
   fetchData(): void {
