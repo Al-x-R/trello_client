@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { BoardService } from '../../services/board.service';
 import { filter, Observable } from 'rxjs';
 import { BoardInterface } from '../../../shared/types/board.interface';
+import { SocketService } from '../../../shared/services/socket.service';
+import { SocketEventsEnum } from '../../../shared/types/socketEvents.enum';
 
 @Component({
   selector: 'board',
@@ -16,7 +18,8 @@ export class BoardComponent implements OnInit {
   constructor(
     private boardsService: BoardsService,
     private route: ActivatedRoute,
-    private boardService: BoardService
+    private boardService: BoardService,
+    private socketService: SocketService
   ) {
     const boardId = this.route.snapshot.paramMap.get('boardId');
 
@@ -29,6 +32,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.socketService.emit(SocketEventsEnum.boardsJoin, {boardId: this.boardId})
     this.fetchData();
   }
 
